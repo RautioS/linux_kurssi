@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <title>LEMP App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding-top: 50px;
+        }
+        .gif {
+            margin: 40px auto;
+        }
+        a {
+            color: white;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tervetuloa sivulleni</h1>
+        <p>MySQL-palvelimen kellonaika: <strong id="time">Ladataan...</strong></p>
+        <div class="gif">
+            <img src="{{ url_for</div>
+        <p>https://github.com/RautioS/linux_kurssi</a></p>
+    </div>
+
+    <script>
+        function updateTime() {
+            fetch('/time')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('time').textContent = data.time;
+                });
+        }
+
+        setInterval(updateTime, 1000); // Päivittää kellon sekunnin välein
+        updateTime(); // Päivitä heti sivun latauksessa
+    </script>
+</body>
+</html>
