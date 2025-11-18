@@ -16,6 +16,23 @@
             font-size: 2em;
             margin: 20px 0;
         }
+        .btn-container {
+            margin-top: 30px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 10px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
         footer {
             position: fixed;
             bottom: 20px;
@@ -28,18 +45,10 @@
     <h1>Tervetuloa uusille sivuilleni!</h1>
     <div id="time">Ladataan kellonaikaa...</div>
 
-    
- <div style="margin-top: 30px;">
-        https://github.com/RautioS/linux_kurssi
-            Avaa GitHub
-        </button>
-
-        /data-analysis/
-            Siirry Data-analyysiin
-        </button>
+    <div class="btn-container">
+        https://github.com/RautioS/linux_kurssiAvaa GitHub</a>
+        <a href="/data-analysisata-analyysiin</a>
     </div>
-
-
 
     <script>
         function fetchTime() {
@@ -58,4 +67,3 @@
     </script>
 </body>
 </html>
-
