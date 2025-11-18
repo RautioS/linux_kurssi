@@ -45,10 +45,16 @@
     <h1>Tervetuloa uusille sivuilleni!</h1>
     <div id="time">Ladataan kellonaikaa...</div>
 
-    <div class="btn-container">
-        https://github.com/RautioS/linux_kurssiAvaa GitHub</a>
-        <a href="/data-analysisata-analyysiin</a>
-    </div>
+ <div class="btn-container">
+    <a class="btn" href="https://github.com/RautioS/linux_kurssiub" target="_blank">
+        Siirry GitHubiin
+    </a>
+
+    <a class="btn" href="http://86.50.23.56/data-analysis/" target="_blank">
+        Siirry Data-analyysiin
+    </a>
+</div>
+
 
     <script>
         function fetchTime() {
@@ -62,8 +68,8 @@
                 });
         }
 
-        fetchTime(); // Lataa heti
-        setInterval(fetchTime, 1000); // Päivitä joka sekunti
+        fetchTime();
+        setInterval(fetchTime, 1000);
     </script>
 </body>
 </html>
