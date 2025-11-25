@@ -2,23 +2,32 @@ import streamlit as st
 import mysql.connector
 import pandas as pd
 
-st.set_page_config(page_title="MySQL Data Viewer", layout="wide")
+from datetime import datetime
+from streamlit_autorefresh import st_autorefresh
 
-st.title("MySQL: Opiskelijat-taulu")
+# 16 minuutin välein autorefresh
+count = st_autorefresh(interval=900_000, limit=None, key="datarefresh")
+
+
+st.set_page_config(page_title="Säädata", layout="wide")
+
+st.title("Säädata Raahe (OpenWeatherMap)")
+
+st.write(f"Sivu päivittyi viimeksi: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
 try:
     # MySQL-yhteys
     conn = mysql.connector.connect(
-        host="localhost",        # muuta tarvittaessa esim. 86.50.23.56
+        host="localhost",
         user="exampleuser",
         password="kissaperkele",
-        database="exampledb"
+        database="weather_db"
     )
 
-    query = "SELECT * FROM opiskelijat;"
+    query = "SELECT * FROM weather_data ORDER BY timestamp DESC LIMIT 50;"
     df = pd.read_sql(query, conn)
 
-    st.subheader("Opiskelijat")
+    st.subheader("Viimeisimmät säähavainnot")
     st.dataframe(df, use_container_width=True)
 
     st.write(f"Rivejä yhteensä: {len(df)}")
