@@ -18,3 +18,4 @@ if st.button("Hae uusi vitsi"):
         else:
             st.error("Virhe API-kutsussa.")
     except Exception as e:
+        st.error(f"Tapahtui virhe: {e}")
