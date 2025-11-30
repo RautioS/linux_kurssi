@@ -198,9 +198,10 @@
 
     <script>
         const TOPIC = 'chat/messages';
+        fetchHistory(100);
         
         // Yhdistä MQTT brokeriin WebSocketin kautta
-        const wsUrl = `ws://${window.location.hostname}:9001/mqtt`;
+        const wsUrl = `ws://${window.location.host}/mqtt`;
         const client = mqtt.connect(wsUrl, {
             clientId: 'web_' + Math.random().toString(16).substr(2, 8),
             clean: true,
@@ -219,6 +220,26 @@
         nicknameInput.addEventListener('change', () => {
             localStorage.setItem('mqtt_nickname', nicknameInput.value);
         });
+                
+    async function fetchHistory(limit = 100) {
+        try {
+            const res = await fetch('/api/messages?limit=' + limit);
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const data = await res.json(); // [{id, nickname, message, client_id, created_at}, ...]
+            // Piirrä jokainen viesti vanhimmasta uusimpaan (data on uusimmasta vanhimpaan, jos teit niin API:ssa)
+            
+        data.forEach(row => {
+            const ts = row.created_at ? Date.parse(row.created_at) : undefined;
+            addMessage(row.nickname, row.message, false, ts);
+        });
+
+            addSystemMessage(`Ladattu ${data.length} tallennettua viestiä.`);
+        } catch (e) {
+            console.error('Historiahaku epäonnistui:', e);
+            addSystemMessage('Historiaa ei voitu ladata.');
+        }
+    }
+
         
         client.on('connect', () => {
             console.log('Yhdistetty MQTT brokeriin');
@@ -258,11 +279,11 @@
             }
         });
         
-        function addMessage(nickname, text, isOwn) {
+        function addMessage(nickname, text, isOwn, timestamp) {
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message' + (isOwn ? ' own' : '');
             
-            const time = new Date().toLocaleTimeString('fi-FI', {
+            const time = new Date(timestamp || Date.now()).toLocaleTimeString('fi-FI', {
                 hour: '2-digit',
                 minute: '2-digit'
             });
